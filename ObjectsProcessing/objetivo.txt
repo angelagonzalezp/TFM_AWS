@@ -1,1 +1,2 @@
-
+Procesar los objetos (colecciones de tweets), conforme se cargan en el bucket. 
+Para hacer consultas SQL con Athena, necesitamos que los objetos estén estructurados de manera que contengan un único tweet en cada línea.
