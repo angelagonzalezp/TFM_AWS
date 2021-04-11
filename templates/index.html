@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+ 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <title>Tweepy Searches</title> 
+</head>
+<style>
+    .centered {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+</style>
+
+<body>
+    <title>TWEEPY SEARCHES</title>
+    <nav class="navbar navbar-dark" style="height: 150px; background-color:#4dacff">
+        <span class="navbar-brand mb-0 h1" style="font-size:50px;font-family: cursive;"><b>TWEEPY SEARCHES</b></span>
+        <a href="#" class="pull-left"><img src="static/twicon.png" style="width:120px;height: 120px;"></a> 
+    </nav>
+    <div class="w3-bar" style="background-color: #333;">
+        <a href="." class="w3-bar-item w3-button w3-text-black w3-padding-16" style="background-color:white;font-size:20px;font-family: cursive;"><b>Consulta</b></a>
+        <a href="{{ url_for('procesos') }}" class="w3-bar-item w3-text-white w3-button w3-hover-blue w3-padding-16" style="font-size:20px;font-family: cursive;"><b>Procesos</b></a>
+        <a href="{{ url_for('athena') }}" class="w3-bar-item w3-text-white w3-button w3-hover-blue w3-padding-16" style="font-size:20px;font-family: cursive;"><b>Athena</b></a>
+    </div>
+
+    <p style="font-size:20px; margin-left: 20px; margin-top: 20px;font-family: cursive;"><b>Interfaz para monitorizar palabras claves o Hashtags en Twitter.</b></p>
+    <p> </p>
+    <a href="https://www.researchgate.net/publication/281785732_Introduction_to_Tools_and_Methods_for_the_Analysis_of_Twitter_Data" target="_blank" class="pull-left"><img src="static/differences.ppm" class="centered"></a> 
+    <p> </p>
+    <p style="font-size:20px; margin-left: 20px; font-family: cursive;"><b>Seleccione el tipo de consulta:</b></p>
+    <form id="form1" method="post">
+        <div class="form-group w-25">
+            <div class="form-row">
+                <div class="col">
+                    <label style="font-size:20px; margin-left: 20px; margin-right: 5px;font-family: cursive;"><b>Consulta</b></label>
+                        <select id="res" name="res" style="height:35px;font-family: cursive;">
+                            <option value="" selected disabled hidden style="font-family: cursive;"></option>
+                            <option value="str" style="font-family: cursive;">Stream</option>
+                            <option value="se" style="font-family: cursive;">Search</option>
+                        </select>
+            </div>
+                <div class="col">
+                    <button type="submit" form="form1" class="btn btn-outline-dark btn-m" style="margin-left: 10px;font-family: cursive;"><b>Formulario</b></button>
+                </div>
+            </div>
+            <p> </p>
+        </div>
+    </form>
+    <p> </p>
+</body>
+ 
+</html>

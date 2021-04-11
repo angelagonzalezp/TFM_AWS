@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+ 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>Tweepy Searches</title> 
+</head>
+<style>
+    .alerta {
+        padding: 8px;
+        font-family: cursive;
+        width: 50%;
+        border-radius: 10px;
+        background-color: red;
+        color: rgb(255, 255, 255);
+        text-align: center;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .mensaje {
+        padding: 8px;
+        font-family: cursive;
+        width: 70%;
+        background-color: PaleGreen;
+        color: black;
+        text-align: center;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    ul {
+        list-style: none;
+    }
+
+    ul li::before {
+        content: "\2022";
+        color: #4dacff;
+        font-weight: bold;
+        font-size:20px;
+        display: inline-block; 
+        width: 1em;
+        margin-left: -1em;
+        line-height: 1.5;
+    }
+
+
+</style>
+
+<body>
+    <title>TWEEPY SEARCHES</title>
+    <nav class="navbar navbar-dark" style="height: 150px; background-color:#4dacff">
+        <span class="navbar-brand mb-0 h1" style="font-size:50px;font-family: cursive;"><b>TWEEPY SEARCHES</b></span>
+        <a href="#" class="pull-left"><img src="static/twicon.png" style="width:120px;height: 120px;"></a> 
+    </nav>
+    <div class="w3-bar" style="background-color: #333;">
+        <a href="." class="w3-bar-item w3-button w3-text-black w3-padding-16" style="background-color:white;font-size:20px;font-family: cursive;"><b>Consulta</b></a>
+        <a href="{{ url_for('procesos') }}" class="w3-bar-item w3-text-white w3-button w3-hover-blue w3-padding-16" style="font-size:20px;font-family: cursive;"><b>Procesos</b></a>
+        <a href="{{ url_for('athena') }}" class="w3-bar-item w3-text-white w3-button w3-hover-blue w3-padding-16" style="font-size:20px;font-family: cursive;"><b>Athena</b></a>
+    </div>
+
+    <p style="font-size:20px; margin-left: 20px; margin-top: 20px; font-family: cursive;"><b>Indicar los parámetros de la consulta:</b></p>
+    <p> </p>
+    <p style="font-size:40px; margin-left: 20px; margin-top: 20px;font-family: cursive;color:#4dacff;"><a href="#" class="pull-left"><img src="static/search.png" style="width:50px;height: 50px;"></a><b> PARÁMETROS DE LA CONSULTA</br></b></p>
+    <p> </p>
+    <form id="form1" method="post" action="{{ url_for('index_search')}}">
+        <div class="form-group w-50">
+            <div class="form-row">
+                <div class="col">
+                    <label style="margin-left: 10px;font-family: cursive;"><b>Búsqueda</b></label>
+                    <input type="text" style="margin-left: 10px;width: 250px;" id="que" name="que" required>
+                </div>
+                <div class="col">
+                    <label style="margin-left: 50px;font-family: cursive;"><b>Idioma <a href="https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes">(ISO 639-1)</b></a></label>
+                    <select style="width:100px;margin-left:30px;" id="lengua" name="lengua">
+                        <option value="" selected disabled hidden style="font-family: cursive;"></option>
+                        <option value="en" style="font-family: cursive;">Inglés</option>
+                        <option value="es" style="font-family: cursive;">Español</option>
+                        <option value="pt" style="font-family: cursive;">Portugués</option>
+                        <option value="fr" style="font-family: cursive;">Francés</option>
+                        <option value="de" style="font-family: cursive;">Alemán</option>
+                        <option value="ru" style="font-family: cursive;">Ruso</option>
+                    </select>
+                </div>
+            </div>
+            <p> </p>
+            <div class="form-row">
+                <div class="col">
+                    <label style="margin-left: 10px; margin-right:10px; font-family: cursive;"><b>Tipo de resultados</b></label>
+                        <select id="res" name="res" style="height:28px;font-family: cursive;margin-left:105px;">
+                            <option value="" selected disabled hidden style="font-family: cursive;"></option>
+                            <option value="mixed" style="font-family: cursive;">Mixed</option>
+                            <option value="recent" style="font-family: cursive;">Recent</option>
+                            <option value="popular" style="font-family: cursive;">Popular</option>
+                        </select>
+                    </div>
+                <div class="col">
+                    <label style="font-family: cursive;margin-right: 10px; margin-left: 50px;"><b>Hasta el día</b></label>
+                    <input type="date" id="unt" name="unt" min="2020-01-01" max="2021-12-31" placeholder="yyyy-mm-dd" style="font-family: cursive; text-align:right;margin-left: 30px;">
+                </div>
+            </div>
+            <p> </p>
+            <div class="form-row">
+                <div class="col">
+                    <label style="margin-left: 10px;font-family: cursive;"><b>Número de publicaciones/acceso </b><i class="fa fa-question-circle" title="Número de tuits recuperados en cada invocación" style="font-size:24px;margin-top:5px;"></i></a></label>
+                    <input type="number" min="1" max="100" style="width:50px;margin-left:15px;" id="cont" name="cont" placeholder="15">
+                </div>
+            </div>
+            <p> </p>
+            {% for message in get_flashed_messages(category_filter=["error"]) %}
+                <div class="alerta"><b>{{ message }}</b></div>
+            {% endfor %}
+            {% for message in get_flashed_messages(category_filter=["success"]) %}
+                <div class="mensaje"><b>{{ message }}</b></div>
+            {% endfor %}
+            <p> </p>
+            <p style="font-size:40px; margin-left: 20px; margin-top: 20px;font-family: cursive;color:#4dacff;"><a href="#" class="pull-left"><img src="static/lambda.png" style="width:50px;height: 50px;"></a><b> DETALLES DE LA FUNCIÓN </b></p>
+            <div class="form-row">
+                <div class="col">
+                    <label style="margin-left: 10px;font-family: cursive;" title="Utilice exclusivamente letras, números, guiones o guiones bajos. No incluya espacios."><b>Nombre</b></a></label>
+                    <input type="text" style="margin-left: 10px;width: 260px;" id="fname" name="fname" maxlength ="64" required>
+                </div>
+                <div class="col">
+                    <label style="margin-left: 50px;font-family: cursive;"><b>Frecuencia llamadas </b><i class="fa fa-question-circle" title="Invocaciones a la función Lambda por unidad de tiempo" style="font-size:24px;margin-top:5px;"></i></label>
+                    <input type="number" min="1" style="margin-left: 5px;width:50px;" id="frec" name="frec">
+                    <select id="frec_regla" name="frec_regla" style="height:30px; font-family: cursive;">
+                        <option value="" selected disabled hidden></option>
+                        <option value="minutos" style="font-family: cursive;">min</option>
+                        <option value="horas" style="font-family: cursive;">h</option>
+                    </select>
+                </div>
+            </div>
+            <p> </p>
+            <div class="form-row">
+                <label style="margin-left: 20px;font-family: cursive;"><b>Descripción</b></label>
+                <textarea type="text" id="descr" name="descr" class="form-control" rows="3" style="margin-left: 20px" maxlength ="256"></textarea>
+            </div> 
+        </div>
+    </form>
+        <button type="submit" form="form1" class="btn btn-outline-dark btn-lg" style="margin-left: 10px;font-family: cursive;"><b>Consulta</b></button>
+    </form>
+    <p> </p>
+    <p> </p>
+</body>
+ 
+</html>

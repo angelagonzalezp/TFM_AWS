@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+ 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <title>Tablas Athena</title> 
+</head>
+<style>
+    table {
+        border-collapse: collapse;
+        width: 90%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    td {
+        text-align: center;
+        padding: 8px;
+        font-family: cursive;
+    }
+
+    th {
+        text-align: center;
+        padding: 8px;
+        font-family: cursive;
+        font-size: 20px;
+    }
+
+    tr:nth-child(even){background-color: #f2f2f2}
+
+    th {
+        background-color: #4dacff;
+        color: black;
+        font-family: cursive;
+    }
+</style>
+
+<body>
+    <title>TWEEPY SEARCHES</title>
+    <nav class="navbar navbar-dark" style="height: 150px; background-color:#4dacff">
+        <span class="navbar-brand mb-0 h1" style="font-size:50px;font-family: cursive;"><b>TWEEPY SEARCHES</b></span>
+        <a href="#" class="pull-left"><img src="static/twicon.png" style="width:120px;height: 120px;"></a> 
+    </nav>
+    <div class="w3-bar" style="background-color: #333;">
+        <a href="{{ url_for('index') }}" class="w3-bar-item w3-text-white w3-button w3-hover-blue w3-padding-16" style="font-size:20px;font-family: cursive;"><b>Consulta</b></a>
+        <a href="{{ url_for('procesos') }}" class="w3-bar-item w3-text-white w3-button w3-hover-blue w3-padding-16" style="font-size:20px;font-family: cursive;"><b>Procesos</b></a>
+        <a href="." class="w3-bar-item w3-button w3-text-black w3-padding-16" style="background-color:white;font-size:20px;font-family: cursive;"><b>Athena</b></a>
+    </div>
+    <p> </p>
+    <p style="font-size:40px; text-align: center; margin-top: 20px;font-family: cursive;color:#4dacff;"><b>TABLAS EXISTENTES <a href="#" class="pull-left"><img src="static/athena.png" style="width:80px;height: 80px;"></a></br></b></p>
+    <table>
+        <tr>
+          <th><b>NOMBRE</b></th>
+          <th><b>FECHA DE CREACIÓN</b></th>
+          <th><b>PROCEDENCIA DE LOS DATOS</b></th>
+          <th><b>ENTRADAS</b></th>
+          <th><b>ÚLTIMA CONSULTA</b></th>
+          <th></th>
+        </tr>
+        {% for t in tablas %}
+        <tr>
+          <td><b>{{ t['Name'] }}</b></td>
+          <td>{{ t['CreateTime'] }}</td>
+          <td>{{ t['Parameters']['location'] }}</td>
+          <td>{{ t['Parameters']['recordCount'] }}</td>
+          <td>{{ t['LastAccessTime'] }}</td>
+          <td>
+            <form action="{{ url_for('athena') }}" method="POST">
+                <button name="downl" id="downl" type="submit" class="btn btn-outline-success" value="{{ t['Name'] }}">Descargar</button>
+              </form>
+          </td>
+        </tr>
+        {% endfor %}
+      </table>
+    <p></p>
+</body>
+ 
+</html>

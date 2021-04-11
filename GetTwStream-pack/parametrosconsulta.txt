@@ -1,0 +1,1 @@
+{"query_params": {"keyW": "AstraZeneca", "ISOCode": "es", "nombreFun": "AstraZeneca_stream", "ruleFreq": "1", "unidadTiempo": "minutos", "descripcion": "", "DStream": "AstraZeneca_stream"}}

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+ 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <title>Procesos</title> 
+</head>
+<style>
+    table {
+        border-collapse: collapse;
+        width: 95%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .mytable {
+        border-collapse: collapse;
+        width: 33%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    td {
+        text-align: center;
+        padding: 8px;
+        font-family: cursive;
+    }
+
+    th {
+        text-align: center;
+        padding: 8px;
+        font-family: cursive;
+        font-size: 20px;
+    }
+
+    tr:nth-child(even){background-color: #f2f2f2}
+
+    th {
+        background-color: #4dacff;
+        color: black;
+        font-family: cursive;
+    }
+</style>
+
+<body>
+    <title>Consultas</title>
+    <nav class="navbar navbar-dark" style="height: 150px; background-color:#4dacff">
+        <span class="navbar-brand mb-0 h1" style="font-size:50px;font-family: cursive;"><b>TWEEPY SEARCHES</b></span>
+        <a href="#" class="pull-left"><img src="static/twicon.png" style="width:120px;height: 120px;"></a> 
+    </nav>
+    <div class="w3-bar" style="background-color: #333;">
+        <a href="{{ url_for('index') }}" class="w3-bar-item w3-button w3-text-white w3-hover-blue w3-padding-16" style="font-size:20px;font-family: cursive;"><b>Consulta</b></a>
+        <a href="." class="w3-bar-item w3-button w3-padding-16w3-text-black w3-padding-16" style="background-color:white;font-size:20px;font-family: cursive;"><b>Procesos</b></a>
+        <a href="{{ url_for('athena') }}" class="w3-bar-item w3-button w3-text-white w3-hover-blue w3-padding-16" style="font-size:20px;font-family: cursive;"><b>Athena</b></a>
+    </div>
+
+    <p style="font-size:40px; text-align: center; margin-top: 20px;font-family: cursive;color:#4dacff;"><b>FUNCIONES EN CURSO <a href="#" class="pull-left"><img src="static/aws-lambda.svg" style="width:60px;height: 60px;"></a></br></b></p>
+    <table>
+        <tr>
+          <th><b>NOMBRE</b></th>
+          <th><b>TIEMPO DE EJECUCIÓN</b></th>
+          <th><b>ARN</b></th>
+          <th><b>ÚLTIMO CAMBIO</b></th>
+          <th><b>DESCRIPCIÓN</b></th>
+          <th></th>
+        </tr>
+        {% for f in fun %}
+        <tr>
+          <td><b>{{ f['FunctionName'] }}</b></td>
+          <td>{{ f['Runtime'] }}</td>
+          <td>{{ f['FunctionArn'] }}</td>
+          <td>{{ f['LastModified'] }}</td>
+          <td>{{ f['Description'] }}</td>
+          <td>
+            <form action="{{ url_for('procesos') }}" method="POST">
+                <button name="proc" id="proc" type="submit" class="btn btn-outline-danger" value="{{ f['FunctionName'] }}">Eliminar</button>
+              </form>
+          </td>
+        </tr>
+        {% endfor %}
+      </table>
+    <p></p>
+    <p style="font-size:40px; text-align: center; margin-top: 20px;font-family: cursive;color:#4dacff;"><b>DATOS ALMACENADOS EN S3 <a href="#" class="pull-left"><img src="static/s3.png" style="width:60px;height: 60px;"></a></br></b></p>
+    <table class="mytable">
+        <tr>
+          <th><b>RESULTADOS</b></th>
+          <th>CREAR TABLA</th>
+        </tr>
+        {% for pref in cubo %}
+        <tr>
+          <td><b>{{ pref }}</b></td>
+          <td><form action="{{ url_for('procesos') }}" method="POST">
+            <button name="athe" id="athe" type="submit" class="btn btn-warning" value="{{ pref }}">Athena</button>
+            </form></td>
+        </tr>
+        {% endfor %}
+      </table>
+    <p></p>
+</body>
+
+</html>
