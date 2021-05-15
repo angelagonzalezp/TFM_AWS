@@ -7,8 +7,9 @@ Herramienta basada en Amazon Web Services para monitorización de Hashtags o cue
 Recuperación de tweets pasados (API search) o en tiempo real (API stream), procesamiento y almacenamiento en Amazon S3. Consultas SQL para la creación de tablas en Athena.
 
 This tool allows to collect:
--Past tweets by making requests to Twitter's Search API
--Tweets from the platform in real-time by making requests to Twitter's Stream API
+- Past tweets by making requests to Twitter's Search API
+- Tweets from the platform in real-time by making requests to Twitter's Stream API
+
 
 
 
