@@ -12,10 +12,10 @@ This tool allows to collect:
 - Tweets from the platform in real-time by making requests to Twitter's Stream API
 
 It consists on a modular architecture that combines the following AWS cloud services:
-- [x] AWS Lambda
-- [x] Amazon Kinesis Data Firehose
-- [x] Amazon S3
-- [x] Amazon Athena 
+- AWS Lambda
+- Amazon Kinesis Data Firehose
+- Amazon S3
+- Amazon Athena 
 allowing the user to create datasets of tweets (including metadata) matching specific criteria, keeping it accesible in an S3 bucket and 
 analise them by SQL queries.
 
