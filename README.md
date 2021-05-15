@@ -16,7 +16,12 @@ It consists on a modular architecture that combines the following AWS cloud serv
 - Amazon Kinesis Data Firehose
 - Amazon S3
 - Amazon Athena 
-allowing the user to create datasets of tweets (including metadata) matching specific criteria, keeping it accesible in an S3 bucket and 
-analise them by SQL queries.
+
+This web app prototype allowing is designed to allow the user to:
+- Create huge datasets of tweets (including metadata) matching specific criteria.
+- Keep it always accesible in an S3 bucket.
+- Analise them by SQL queries, creating custom-made Athena tables. Once you have a table, two options are available:
+  - Export as CSV file.
+  - Export to a data-mining tool to create helpful visualisation in orden to find hidden patterns.
 
 
