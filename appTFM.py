@@ -9,13 +9,15 @@ Interfaz web para consultas a Twitter
 """
 
 from flask import Flask, render_template, request, redirect, url_for, session, flash, make_response
-import datetime
+import datetime, json
 from pytz import timezone 
 import sys, json, secrets, boto3, zipfile
 import os.path
 import tweepy as tw
 import shutil, locale, random, config, io, csv
 import pandas as pd
+import plotly as py
+import plotly.graph_objects as go
 
 sys.path.append('\Python\Python37\Lib\site-packages')
 
@@ -134,6 +136,55 @@ def check_function_exists(cliente, funcion):
         
     return exists
 
+def pie_chart(valores, etiquetas, titulo):
+    dict_fig = dict({
+    "data": [{"type": "pie",
+              "values": valores,
+              "labels": etiquetas}],
+    "layout": {"title": {"text": titulo}}
+    })
+    fig = go.Figure(dict_fig)
+    graphJSON = fig.to_json()
+    
+    return graphJSON
+
+def scatter_chart(x, y, titulo):
+    dict_fig = dict({
+    "data": [{"type": "scatter",
+              "mode": "markers",
+              "x": x,
+              "y": y}],
+    "layout": {"title": {"text": titulo}}
+    })
+    fig = go.Figure(dict_fig)
+    graphJSON = fig.to_json()
+    
+    return graphJSON
+
+def bar_chart(x, y, titulo):
+    dict_fig = dict({
+    "data": [{"type": "bar",
+              "x": x,
+              "y": y}],
+    "layout": {"title": {"text": titulo}}
+    })
+    fig = go.Figure(dict_fig)
+    graphJSON = fig.to_json()
+    
+    return graphJSON
+
+# Convertir las fechas a formato Datetime
+def created_at_datetime(fechas):
+    fechas_dt = []
+    for i in range(0,len(fechas)):
+        spl = fechas[i].split(" ")
+        month_name = spl[1]
+        datetime_object = datetime.datetime.strptime(month_name, "%b")
+        month_number = datetime_object.month
+        fechas_dt.append(datetime(int(spl[-1]), month_number, int(spl[2])))
+        
+    return fechas_dt
+
 """ APLICACIÓN WEB """
 
 @app.route("/", methods =["GET", "POST"])
@@ -146,6 +197,7 @@ def index():
             return render_template('index_search.html')
     else:
         return render_template('index.html')
+
         
 @app.route("/index_search", methods =["GET", "POST"])
 def index_search():
@@ -385,6 +437,8 @@ def procesos():
 def athena():
     
     tablaDOWN = request.form.get("downl") 
+    tablaDASH = request.form.get("dashb") 
+    # tablaDEL = request.form.get("del") 
     
     # Listar las tablas existentes:
     tablas = clAth.list_table_metadata(CatalogName='AwsDataCatalog', DatabaseName='default')
@@ -408,12 +462,69 @@ def athena():
         # Descargar el último (el csv que acabamos de generar)
         obj = clientS3.get_object(Bucket='athenaresults-tfm', Key=ultimo['Key'])
         # Convertir a Dataframe y después a CSV -> descarga en navegador (make_response)
-        df = pd.read_csv(io.BytesIO(obj['Body'].read()), encoding='utf8')
-        resp = make_response(df.to_csv(sep=';', encoding='utf-8',index=False))
+        df = pd.read_csv(io.BytesIO(obj['Body'].read()), encoding='utf-8-sig')
+        resp = make_response(df.to_csv(sep=';', encoding='utf-8-sig',index=False))
         resp.headers["Content-Disposition"] = "attachment; filename=tabla.csv"
         resp.headers["Content-Type"] = "text/csv"
         return resp
-     
+    
+    # Funcionalidad del botón "Resumen"
+    if tablaDASH is not None: 
+        # Query Athena
+        query = 'SELECT * FROM "default"."' + tablaDASH + '";' # Descargar tabla completa
+        clAth.start_query_execution(QueryString=query,
+                                    ResultConfiguration={'OutputLocation': 's3://athenaresults-tfm/'})
+        # Listar TODOS los objetos del bucket donde se ha almacenado la Query
+        objs = clientS3.list_objects(Bucket='athenaresults-tfm')['Contents']
+        # Ordenar por RECIENTES
+        objs.sort(key=lambda item:item['LastModified'], reverse=True)
+        ultimo = objs[0]                   
+        # Descargar el último (el csv que acabamos de generar)
+        obj = clientS3.get_object(Bucket='athenaresults-tfm', Key=ultimo['Key'])
+        # Convertir a Dataframe y después a CSV -> descarga en navegador (make_response)
+        df = pd.read_csv(io.BytesIO(obj['Body'].read()), encoding='utf-8-sig')
+        # Gráficas de muestra:
+        if 'metadata_iso_language_code' in df.columns:
+            labels = df['metadata_iso_language_code'].value_counts().index
+            values = df['metadata_iso_language_code'].value_counts().values
+        else:
+            labels = df['lang'].value_counts().index
+            values = df['lang'].value_counts().values
+        # Gráfico de sectores con los idiomas de las publicaciones
+        graphJSON = pie_chart(values, labels, "Idiomas de las publicaciones")
+        
+        if 'friends_count' and 'followers_count' in df.columns:
+            x = df['friends_count'].to_list()
+            y = df['followers_count'].to_list()
+            # Gráfico de dispersión con seguidores y seguidos de los usuarios
+            graphJSON2 = scatter_chart(x,y,"Seguidos(x) vs. Seguidores(y) de los autores")
+            return render_template('athena.html', tablas = metadatos, graphJSON=graphJSON, graphJSON2=graphJSON2)
+        elif 'user_friends_count' and 'user_followers_count' in df.columns:
+            x = df['user_friends_count'].to_list()
+            y = df['user_followers_count'].to_list()
+            # Gráfico de dispersión con seguidores y seguidos de los usuarios
+            graphJSON2 = scatter_chart(x,y,"Seguidos(x) vs. Seguidores(y) de los autores")
+            return render_template('athena.html', tablas = metadatos, graphJSON=graphJSON, graphJSON2=graphJSON2)
+        
+        # if 'created_at' in df.columns:
+        #     fechas = created_at_datetime(df['created_at'])  # Datetime
+        #     fechas = sorted(fechas)                         # Ordenadas 
+        #     fechas_unicas = set(fechas)                     # Fechas sin repetir
+        #     tuits_dia = []                                  # Frecuencia de cada fecha
+        #     for i in range(0,len(fechas_unicas)):
+        #         tuits_dia.append(fechas.count(fechas_unicas[i]))    # Ocurrencias
+            
+        # graphJSON3 = bar_chart(fechas_unicas, tuits_dia, "Número de publicaciones por día")
+        
+        return render_template('athena.html', tablas = metadatos, graphJSON=graphJSON)
+    
+    # Funcionalidad del botón "ELIMINAR"
+    # if tablaDEL is not None:   
+    #     clientGlue.delete_table(CatalogId='AwsDataCatalog', DatabaseName='default', Name='string')
+    #     # Listar las tablas existentes:
+    #     tablas = clAth.list_table_metadata(CatalogName='AwsDataCatalog', DatabaseName='default')
+    #     metadatos = tablas['TableMetadataList']         # Metadatos de las tablas
+        
     return render_template('athena.html', tablas = metadatos)
 
 if __name__ == "__main__":
