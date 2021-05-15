@@ -7,6 +7,8 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script> 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
     <title>Tablas Athena</title> 
 </head>
 <style>
@@ -37,6 +39,19 @@
         color: black;
         font-family: cursive;
     }
+
+    .chart1{
+            margin-top: 30px;
+            text-align: center;
+            width: 100%; 
+    }
+
+    .chart2{
+            margin-top: 30px;
+            text-align: center;
+            width: 100%; 
+    }
+
 </style>
 
 <body>
@@ -51,7 +66,7 @@
         <a href="." class="w3-bar-item w3-button w3-text-black w3-padding-16" style="background-color:white;font-size:20px;font-family: cursive;"><b>Athena</b></a>
     </div>
     <p> </p>
-    <p style="font-size:40px; text-align: center; margin-top: 20px;font-family: cursive;color:#4dacff;"><b>TABLAS EXISTENTES <a href="#" class="pull-left"><img src="static/athena.png" style="width:80px;height: 80px;"></a></br></b></p>
+    <p style="font-size:40px; text-align: center; margin-top: 20px;font-family: cursive;color:#4dacff;"><b>TABLAS EXISTENTES <a href="https://console.aws.amazon.com/athena/home?region=us-east-1#query" target="_blank" class="pull-left"><img src="static/athena.png" style="width:80px;height: 80px;"></a></br></b></p>
     <table>
         <tr>
           <th><b>NOMBRE</b></th>
@@ -59,6 +74,7 @@
           <th><b>PROCEDENCIA DE LOS DATOS</b></th>
           <th><b>ENTRADAS</b></th>
           <th><b>ÚLTIMA CONSULTA</b></th>
+          <th></th>
           <th></th>
         </tr>
         {% for t in tablas %}
@@ -73,10 +89,29 @@
                 <button name="downl" id="downl" type="submit" class="btn btn-outline-success" value="{{ t['Name'] }}">Descargar</button>
               </form>
           </td>
+          <td>
+            <form action="{{ url_for('athena') }}" method="POST">
+                <button name="dashb" id="dashb" type="submit" class="btn btn-outline-primary" value="{{ t['Name'] }}">Resumen</button>
+              </form>
+          </td>
         </tr>
         {% endfor %}
       </table>
     <p></p>
+
+    <div id="chart1" class="chart1"></div>
+    <div id="chart2" class="chart2"></div>
+
+
 </body>
+
+    <script type="text/javascript">
+        var graphs = {{ graphJSON|safe }};
+        Plotly.plot('chart1', graphs, {});
+    </script>
+    <script type="text/javascript">
+        var graphs = {{ graphJSON2|safe }};
+        Plotly.plot('chart2', graphs, {});
+    </script>
  
 </html>
