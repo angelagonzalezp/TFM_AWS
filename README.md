@@ -16,7 +16,7 @@ It consists on a modular architecture that combines the following AWS cloud serv
 - [x] Amazon Kinesis Data Firehose
 - [x] Amazon S3
 - [x] Amazon Athena 
- allowing the user to create datasets of tweets (including metadata) matching specific criteria, keeping it accesible in an S3 bucket and 
- analise them by SQL queries.
+allowing the user to create datasets of tweets (including metadata) matching specific criteria, keeping it accesible in an S3 bucket and 
+analise them by SQL queries.
 
 
