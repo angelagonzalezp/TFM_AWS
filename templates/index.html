@@ -25,7 +25,9 @@
         <a href="#" class="pull-left"><img src="static/twicon.png" style="width:120px;height: 120px;"></a> 
     </nav>
     <div class="w3-bar" style="background-color: #333;">
-        <a href="." class="w3-bar-item w3-button w3-text-black w3-padding-16" style="background-color:white;font-size:20px;font-family: cursive;"><b>Consulta</b></a>
+        <a href="." class="w3-bar-item w3-button w3-text-black w3-padding-16" style="background-color:white;font-size:20px;font-family: cursive;"><b>Inicio</b></a>
+<!--         <a href="{{ url_for('index_search') }}" class="w3-bar-item w3-text-white w3-button w3-hover-blue w3-padding-16" style="font-size:20px;font-family: cursive;"><b>Search</b></a>
+        <a href="{{ url_for('index_stream') }}" class="w3-bar-item w3-text-white w3-button w3-hover-blue w3-padding-16" style="font-size:20px;font-family: cursive;"><b>Stream</b></a> -->
         <a href="{{ url_for('procesos') }}" class="w3-bar-item w3-text-white w3-button w3-hover-blue w3-padding-16" style="font-size:20px;font-family: cursive;"><b>Procesos</b></a>
         <a href="{{ url_for('athena') }}" class="w3-bar-item w3-text-white w3-button w3-hover-blue w3-padding-16" style="font-size:20px;font-family: cursive;"><b>Athena</b></a>
     </div>
