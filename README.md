@@ -4,7 +4,8 @@
 
 Análisis de tendencias de desinformación, Máster en Ingeniería de Telecomunicaciones. 
 Herramienta basada en Amazon Web Services para monitorización de Hashtags o cuentas de usuario en Twitter.
-Recuperación de tweets pasados (API search) o en tiempo real (API stream), procesamiento y almacenamiento en Amazon S3. Consultas SQL para la creación de tablas en Athena.
+Recuperación de tweets pasados (API search) o en tiempo real (API stream), procesamiento y almacenamiento en Amazon S3. Consultas SQL para 
+la creación de tablas en Athena.
 
 This tool allows to collect:
 - Past tweets by making requests to Twitter's Search API
@@ -15,6 +16,7 @@ It consists on a modular architecture that combines the following AWS cloud serv
 - [x] Amazon Kinesis Data Firehose
 - [x] Amazon S3
 - [x] Amazon Athena 
- 
+ allowing the user to create datasets of tweets (including metadata) matching specific criteria, keeping it accesible in an S3 bucket and 
+ analise them by SQL queries.
 
 
