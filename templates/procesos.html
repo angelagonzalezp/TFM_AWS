@@ -92,7 +92,7 @@
         </tr>
         {% for pref in cubo %}
         <tr>
-          <td><b>{{ pref }}</b></td>
+          <td><b><a href="https://s3.console.aws.amazon.com/s3/buckets/interface-processed?region=us-east-1&prefix={{ pref }}/" target="_blank">{{ pref }}</a></b></td>
           <td><form action="{{ url_for('procesos') }}" method="POST">
             <button name="athe" id="athe" type="submit" class="btn btn-warning" value="{{ pref }}">Athena</button>
             </form></td>
