@@ -10,6 +10,11 @@ This tool allows to collect:
 - Past tweets by making requests to Twitter's Search API
 - Tweets from the platform in real-time by making requests to Twitter's Stream API
 
-
+It consists on a modular architecture that combines the following AWS cloud services:
+- [x] AWS Lambda
+- [x] Amazon Kinesis Data Firehose
+- [x] Amazon S3
+- [x] Amazon Athena 
+ 
 
 
