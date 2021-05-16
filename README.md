@@ -17,7 +17,7 @@ It consists on a modular architecture that combines the following AWS cloud serv
 - Amazon S3
 - Amazon Athena 
 
-This web app prototype allowing is designed to allow the user to:
+This web app prototype is designed to allow the user to:
 - Create huge datasets of tweets (including metadata) matching specific criteria.
 - Keep them always accesible in an S3 bucket.
 - Analise them by SQL queries, creating custom-made Athena tables. Once you have a table, two options are available:
