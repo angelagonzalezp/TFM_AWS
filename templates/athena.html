@@ -12,6 +12,16 @@
     <title>Tablas Athena</title> 
 </head>
 <style>
+    span {
+        font-family: Copperplate, Papyrus, fantasy;
+    }
+
+    body {
+        font-family: Garamond;
+        font-size: 20px;
+        font-weight: bold;
+    }
+
     table {
         border-collapse: collapse;
         width: 90%;
@@ -22,14 +32,17 @@
     td {
         text-align: center;
         padding: 8px;
-        font-family: cursive;
+        font-family: Garamond;
+        font-size: 18px;
+        font-weight: bold;
     }
 
     th {
         text-align: center;
         padding: 8px;
-        font-family: cursive;
-        font-size: 20px;
+        font-family: Garamond;
+        font-size: 22px;
+        font-weight: bold;
     }
 
     tr:nth-child(even){background-color: #f2f2f2}
@@ -37,7 +50,9 @@
     th {
         background-color: #4dacff;
         color: black;
-        font-family: cursive;
+        font-family: Garamond;
+        font-size: 20px;
+        font-weight: bold;
     }
 
     .chart1{
@@ -57,41 +72,43 @@
 <body>
     <title>TWEEPY SEARCHES</title>
     <nav class="navbar navbar-dark" style="height: 150px; background-color:#4dacff">
-        <span class="navbar-brand mb-0 h1" style="font-size:50px;font-family: cursive;"><b>TWEEPY SEARCHES</b></span>
-        <a href="#" class="pull-left"><img src="static/twicon.png" style="width:120px;height: 120px;"></a> 
+        <div class="form-row w-50">
+            <a href="#" class="pull-right"><img src="static/twicon.png" style="width:120px;height: 120px;"></a> 
+            <span class="navbar-brand mb-0 h1" style="font-size: 50px;margin-top: 25px"><b>Tweepy Searches</b></span>
+        </div>
     </nav>
     <div class="w3-bar" style="background-color: #333;">
-        <a href="{{ url_for('index') }}" class="w3-bar-item w3-text-white w3-button w3-hover-blue w3-padding-16" style="font-size:20px;font-family: cursive;"><b>Consulta</b></a>
-        <a href="{{ url_for('procesos') }}" class="w3-bar-item w3-text-white w3-button w3-hover-blue w3-padding-16" style="font-size:20px;font-family: cursive;"><b>Procesos</b></a>
-        <a href="." class="w3-bar-item w3-button w3-text-black w3-padding-16" style="background-color:white;font-size:20px;font-family: cursive;"><b>Athena</b></a>
+        <a href="{{ url_for('index') }}" class="w3-bar-item w3-text-white w3-button w3-hover-blue w3-padding-16" style="font-size:25px;"><b>Inicio</b></a>
+        <a href="{{ url_for('procesos') }}" class="w3-bar-item w3-text-white w3-button w3-hover-blue w3-padding-16" style="font-size:25px;"><b>Procesos</b></a>
+        <a href="." class="w3-bar-item w3-button w3-text-black w3-padding-16" style="background-color:white;font-size:25px;"><b>Athena</b></a>
     </div>
     <p> </p>
-    <p style="font-size:40px; text-align: center; margin-top: 20px;font-family: cursive;color:#4dacff;"><b>TABLAS EXISTENTES <a href="https://console.aws.amazon.com/athena/home?region=us-east-1#query" target="_blank" class="pull-left"><img src="static/athena.png" style="width:80px;height: 80px;"></a></br></b></p>
+    <p style="font-size:40px; text-align: center; margin-top: 20px;color:#4dacff;">Tablas existentes <a href="https://console.aws.amazon.com/athena/home?region=us-east-1#query" target="_blank" class="pull-left"><img src="static/athena.png" style="width:80px;height: 80px;"></a></br></p>
     <table>
         <tr>
-          <th><b>NOMBRE</b></th>
-          <th><b>FECHA DE CREACIÓN</b></th>
-          <th><b>PROCEDENCIA DE LOS DATOS</b></th>
-          <th><b>ENTRADAS</b></th>
-          <th><b>ÚLTIMA CONSULTA</b></th>
+          <th>NOMBRE</th>
+          <th>FECHA DE CREACIÓN</th>
+          <th>PROCEDENCIA DE LOS DATOS</th>
+          <th>ENTRADAS</th>
+          <th>ÚLTIMA CONSULTA</th>
           <th></th>
           <th></th>
         </tr>
         {% for t in tablas %}
         <tr>
-          <td><b>{{ t['Name'] }}</b></td>
+          <td>{{ t['Name'] }}</td>
           <td>{{ t['CreateTime'] }}</td>
           <td>{{ t['Parameters']['location'] }}</td>
           <td>{{ t['Parameters']['recordCount'] }}</td>
           <td>{{ t['LastAccessTime'] }}</td>
           <td>
             <form action="{{ url_for('athena') }}" method="POST">
-                <button name="downl" id="downl" type="submit" class="btn btn-outline-success" value="{{ t['Name'] }}">Descargar</button>
+                <button name="downl" id="downl" type="submit" class="btn btn-outline-success" value="{{ t['Name'] }}"><b>Descargar</b></button>
               </form>
           </td>
           <td>
             <form action="{{ url_for('athena') }}" method="POST">
-                <button name="dashb" id="dashb" type="submit" class="btn btn-outline-primary" value="{{ t['Name'] }}">Resumen</button>
+                <button name="dashb" id="dashb" type="submit" class="btn btn-outline-primary" value="{{ t['Name'] }}"><b>Resumen</b></button>
               </form>
           </td>
         </tr>

@@ -10,6 +10,15 @@
     <title>Procesos</title> 
 </head>
 <style>
+    span {
+        font-family: Copperplate, Papyrus, fantasy;
+    }
+
+    body {
+        font-family: Garamond;
+        font-size: 20px;
+        font-weight: bold;
+    }
     table {
         border-collapse: collapse;
         width: 95%;
@@ -27,14 +36,17 @@
     td {
         text-align: center;
         padding: 8px;
-        font-family: cursive;
+        font-family: Garamond;
+        font-size: 18px;
+        font-weight: bold;
     }
 
     th {
         text-align: center;
         padding: 8px;
-        font-family: cursive;
+        font-family: Garamond;
         font-size: 20px;
+        font-weight: bold;
     }
 
     tr:nth-child(even){background-color: #f2f2f2}
@@ -42,49 +54,53 @@
     th {
         background-color: #4dacff;
         color: black;
-        font-family: cursive;
+        font-family: Garamond;
+        font-size: 20px;
+        font-weight: bold;
     }
 </style>
 
 <body>
     <title>Consultas</title>
     <nav class="navbar navbar-dark" style="height: 150px; background-color:#4dacff">
-        <span class="navbar-brand mb-0 h1" style="font-size:50px;font-family: cursive;"><b>TWEEPY SEARCHES</b></span>
-        <a href="#" class="pull-left"><img src="static/twicon.png" style="width:120px;height: 120px;"></a> 
+      <div class="form-row w-50">
+          <a href="#" class="pull-right"><img src="static/twicon.png" style="width:120px;height: 120px;"></a> 
+          <span class="navbar-brand mb-0 h1" style="font-size: 50px;margin-top: 25px"><b>Tweepy Searches</b></span>
+      </div>
     </nav>
     <div class="w3-bar" style="background-color: #333;">
-        <a href="{{ url_for('index') }}" class="w3-bar-item w3-button w3-text-white w3-hover-blue w3-padding-16" style="font-size:20px;font-family: cursive;"><b>Consulta</b></a>
-        <a href="." class="w3-bar-item w3-button w3-padding-16w3-text-black w3-padding-16" style="background-color:white;font-size:20px;font-family: cursive;"><b>Procesos</b></a>
-        <a href="{{ url_for('athena') }}" class="w3-bar-item w3-button w3-text-white w3-hover-blue w3-padding-16" style="font-size:20px;font-family: cursive;"><b>Athena</b></a>
+        <a href="{{ url_for('index') }}" class="w3-bar-item w3-button w3-text-white w3-hover-blue w3-padding-16" style="font-size:25px;"><b>Consulta</b></a>
+        <a href="." class="w3-bar-item w3-button w3-padding-16w3-text-black w3-padding-16" style="background-color:white;font-size:25px;"><b>Procesos</b></a>
+        <a href="{{ url_for('athena') }}" class="w3-bar-item w3-button w3-text-white w3-hover-blue w3-padding-16" style="font-size:25px;"><b>Athena</b></a>
     </div>
 
-    <p style="font-size:40px; text-align: center; margin-top: 20px;font-family: cursive;color:#4dacff;"><b>FUNCIONES EN CURSO <a href="#" class="pull-left"><img src="static/aws-lambda.svg" style="width:60px;height: 60px;"></a></br></b></p>
+    <p style="font-size:40px; text-align: center; margin-top: 20px;color:#4dacff;">Funciones en curso <a href="#" class="pull-left"><img src="static/aws-lambda.svg" style="width:60px;height: 60px;"></a></br></p>
     <table>
         <tr>
-          <th><b>NOMBRE</b></th>
-          <th><b>TIEMPO DE EJECUCIÓN</b></th>
-          <th><b>ARN</b></th>
-          <th><b>ÚLTIMO CAMBIO</b></th>
-          <th><b>DESCRIPCIÓN</b></th>
+          <th>NOMBRE</th>
+          <th>TIEMPO DE EJECUCIÓN</th>
+          <th>ARN</th>
+          <th>ÚLTIMO CAMBIO</b></th>
+          <th>DESCRIPCIÓN</th>
           <th></th>
         </tr>
         {% for f in fun %}
         <tr>
-          <td><b>{{ f['FunctionName'] }}</b></td>
+          <td>{{ f['FunctionName'] }}</td>
           <td>{{ f['Runtime'] }}</td>
           <td>{{ f['FunctionArn'] }}</td>
           <td>{{ f['LastModified'] }}</td>
           <td>{{ f['Description'] }}</td>
           <td>
             <form action="{{ url_for('procesos') }}" method="POST">
-                <button name="proc" id="proc" type="submit" class="btn btn-outline-danger" value="{{ f['FunctionName'] }}">Eliminar</button>
+                <button name="proc" id="proc" type="submit" class="btn btn-outline-danger" value="{{ f['FunctionName'] }}"><b>Eliminar</b></button>
               </form>
           </td>
         </tr>
         {% endfor %}
       </table>
     <p></p>
-    <p style="font-size:40px; text-align: center; margin-top: 20px;font-family: cursive;color:#4dacff;"><b>DATOS ALMACENADOS EN S3 <a href="#" class="pull-left"><img src="static/s3.png" style="width:60px;height: 60px;"></a></br></b></p>
+    <p style="font-size:40px; text-align: center; margin-top: 20px;color:#4dacff;">Datos almacenados en S3 <a href="#" class="pull-left"><img src="static/s3.png" style="width:60px;height: 60px;"></a></br></p>
     <table class="mytable">
         <tr>
           <th><b>RESULTADOS</b></th>
@@ -92,9 +108,9 @@
         </tr>
         {% for pref in cubo %}
         <tr>
-          <td><b><a href="https://s3.console.aws.amazon.com/s3/buckets/interface-processed?region=us-east-1&prefix={{ pref }}/" target="_blank">{{ pref }}</a></b></td>
+          <td><a href="https://s3.console.aws.amazon.com/s3/buckets/interface-processed?region=us-east-1&prefix={{ pref }}/" target="_blank">{{ pref }}</a></td>
           <td><form action="{{ url_for('procesos') }}" method="POST">
-            <button name="athe" id="athe" type="submit" class="btn btn-warning" value="{{ pref }}">Athena</button>
+            <button name="athe" id="athe" type="submit" class="btn btn-warning" value="{{ pref }}"><b>Athena</b></button>
             </form></td>
         </tr>
         {% endfor %}
