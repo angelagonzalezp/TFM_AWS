@@ -1,1 +1,1 @@
-{"query_params": {"keyW": "AstraZeneca", "ISOCode": null, "resultType": null, "fechaLim": "", "contador": "", "nombreFun": "tweets2kinesis", "ruleFreq": "", "unidadTiempo": null, "descripcion": "", "DStream": "tweets2kinesis"}}
+{"query_params": {"keyW": null, "ISOCode": null, "resultType": null, "fechaLim": null, "contador": null, "nombreFun": null, "ruleFreq": null, "unidadTiempo": null, "descripcion": null, "DStream": null}}

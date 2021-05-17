@@ -1,1 +1,1 @@
-{"query_params": {"keyW": "AstraZeneca", "ISOCode": "es", "nombreFun": "AstraZeneca_stream", "ruleFreq": "1", "unidadTiempo": "minutos", "descripcion": "", "DStream": "AstraZeneca_stream"}}
+{"query_params": {"keyW": "AstraZeneca", "ISOCode": null, "nombreFun": "AstraZeneca_FEB", "ruleFreq": "2", "unidadTiempo": "horas", "descripcion": "29 de Febrero: La EMA aprueba AstraZeneca. API Search. L\u00edmite: 1/2/2021. Frecuencia: 2h (40 tweets/acceso). Resultados: Mixed", "DStream": "AstraZeneca_FEB"}}
