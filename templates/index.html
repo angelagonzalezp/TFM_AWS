@@ -13,6 +13,37 @@
     span {
         font-family: Copperplate, Papyrus, fantasy;
     }
+    ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: #333;
+    }
+
+    li {
+        float: left;
+    }
+
+    li a {
+        display: block;
+        color: white;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+        font-weight: bold;
+        font-family: Copperplate, Papyrus, fantasy;
+    }
+
+    li a:hover:not(.active) {
+        background-color: #4dacff; 
+        color:black;
+    }
+
+    .active {
+        background-color: white;
+        color: black;
+    }
 
     body {
         font-family: Garamond;
@@ -34,13 +65,12 @@
             <span class="navbar-brand mb-0 h1" style="font-size: 50px;margin-top: 25px"><b>Tweepy Searches</b></span>
         </div>
     </nav>
-    <div class="w3-bar" style="background-color: #333;">
-        <a href="." class="w3-bar-item w3-button w3-text-black w3-padding-16" style="background-color:white;font-size:25px;"><b>Inicio</b></a>
-<!--         <a href="{{ url_for('index_search') }}" class="w3-bar-item w3-text-white w3-button w3-hover-blue w3-padding-16" style="font-size:20px;font-family: cursive;"><b>Search</b></a>
-        <a href="{{ url_for('index_stream') }}" class="w3-bar-item w3-text-white w3-button w3-hover-blue w3-padding-16" style="font-size:20px;font-family: cursive;"><b>Stream</b></a> -->
-        <a href="{{ url_for('procesos') }}" class="w3-bar-item w3-text-white w3-button w3-hover-blue w3-padding-16" style="font-size:25px"><b>Procesos</b></a>
-        <a href="{{ url_for('athena') }}" class="w3-bar-item w3-text-white w3-button w3-hover-blue w3-padding-16" style="font-size:25px"><b>Athena</b></a>
-    </div>
+
+    <ul>
+        <li><a href="." class="active">Inicio</a></li>
+        <li><a href="{{ url_for('procesos') }}">Procesos</a></li>
+        <li><a href="{{ url_for('athena') }}">Athena</a></li>
+    </ul>
 
     <p style="margin-left: 20px; margin-top: 20px;"><b>Interfaz para monitorizar palabras claves o Hashtags en Twitter.</b></p>
     <p> </p>

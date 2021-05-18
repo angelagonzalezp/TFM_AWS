@@ -43,18 +43,35 @@
         margin-right: auto;
     }
     ul {
-        list-style: none;
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: #333;
     }
 
-    ul li::before {
-        content: "\2022";
-        color: #4dacff;
+    li {
+        float: left;
+    }
+
+    li a {
+        display: block;
+        color: white;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
         font-weight: bold;
-        font-size:20px;
-        display: inline-block; 
-        width: 1em;
-        margin-left: -1em;
-        line-height: 1.5;
+        font-family: Copperplate, Papyrus, fantasy;
+    }
+
+    li a:hover:not(.active) {
+        background-color: #4dacff; 
+        color:black;
+    }
+
+    .center_div{
+        margin-left:10px;
+        width: 60%;
     }
 
 
@@ -68,26 +85,46 @@
             <span class="navbar-brand mb-0 h1" style="font-size: 50px;margin-top: 25px"><b>Tweepy Searches</b></span>
         </div>
     </nav>
-    <div class="w3-bar" style="background-color: #333;">
-        <a href="." class="w3-bar-item w3-button w3-text-black w3-padding-16" style="background-color:white;font-size:25px;"><b>Inicio</b></a>
-        <a href="{{ url_for('procesos') }}" class="w3-bar-item w3-text-white w3-button w3-hover-blue w3-padding-16" style="font-size:25px;"><b>Procesos</b></a>
-        <a href="{{ url_for('athena') }}" class="w3-bar-item w3-text-white w3-button w3-hover-blue w3-padding-16" style="font-size:25px;"><b>Athena</b></a>
-    </div>
+    
+    <ul>
+        <li><a href="{{ url_for('index') }}">Inicio</a></li>
+        <li><a href="{{ url_for('procesos') }}">Procesos</a></li>
+        <li><a href="{{ url_for('athena') }}">Athena</a></li>
+    </ul>
 
-    <p style="font-size:20px; margin-left: 20px; margin-top: 20px;"><b>Indicar los parámetros de la consulta:</b></p>
     <p> </p>
-    <p style="font-size:40px; margin-left: 20px; margin-top: 20px;color:#4dacff;"><a href="#" class="pull-left"><img src="static/search.png" style="width:50px;height: 50px;"></a><b> Parámetros de la consulta</br></b></p>
-    <p> </p>
-    <form id="form1" method="post" action="{{ url_for('index_search')}}">
-        <div class="form-group w-50">
-            <div class="form-row">
-                <div class="col">
-                    <label style="margin-left: 10px;"><b>Búsqueda</b></label>
-                    <input type="text" style="margin-left: 23px;width: 250px;" id="que" name="que" required>
+    <div class="container center_div">
+        <p style="font-size:40px;color:#4dacff;margin-left:10px;"><a href="#" class="pull-left"><img src="static/search.png" style="width:50px;height: 50px;"></a><b> Parámetros de la consulta</br></b></p>
+        <p> </p>
+        <form id="form1" method="post" action="{{ url_for('index_search')}}">
+            <div class="form-group col-6">
+                <input type="text" id="que" name="que" class="form-control" placeholder="Términos de la búsqueda" required>
+            </div>
+            <p> </p>
+            <div class="form-row" style="margin-left:10px;">
+                <div class="form-group col-md-4">
+                    <label><b>Resultados</b></label>
+                    <select id="res" name="res" style="margin-left:50px;">
+                        <option value="" selected disabled hidden></option>
+                        <option value="mixed">Mixed</option>
+                        <option value="recent">Recent</option>
+                        <option value="popular">Popular</option>
+                    </select>
                 </div>
-                <div class="col">
-                    <label style="margin-left: 50px;"><b>Idioma <a href="https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes">(ISO 639-1)</b></a></label>
-                    <select style="width:100px;margin-left:30px;" id="lengua" name="lengua">
+                <div class="form-group col-md-4">
+                    <label><b>Tuits/acceso </b><i class="fa fa-question-circle" title="Número de tuits recuperados en cada invocación" style="font-size:24px;margin-top:5px;"></i></a></label>
+                    <input type="number" min="1" max="100" id="cont" name="cont" placeholder="15" style="margin-left:18px;">
+                </div>
+            </div>
+            <p> </p>
+            <div class="form-row" style="margin-left:10px;">
+                <div class="form-group col-md-4">
+                    <label><b>Hasta</b></label>
+                    <input type="date" id="unt" name="unt" min="2020-01-01" max="2021-12-31" placeholder="yyyy-mm-dd" style="text-align:right;">
+                </div>
+                <div class="form-group col-md-4">
+                    <label><b><a href="https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes">Idioma (ISO)</b></a></label>
+                    <select id="lengua" name="lengua" style="margin-left:8px;">
                         <option value="" selected disabled hidden></option>
                         <option value="en">Inglés</option>
                         <option value="es">Español</option>
@@ -98,29 +135,7 @@
                     </select>
                 </div>
             </div>
-            <p> </p>
-            <div class="form-row">
-                <div class="col">
-                    <label style="margin-left: 10px; margin-right:40px;"><b>Tipo de resultados</b></label>
-                        <select id="res" name="res" style="height:28px;margin-left:65px;">
-                            <option value="" selected disabled hidden></option>
-                            <option value="mixed">Mixed</option>
-                            <option value="recent">Recent</option>
-                            <option value="popular">Popular</option>
-                        </select>
-                    </div>
-                <div class="col">
-                    <label style="margin-right: 10px; margin-left: 50px;"><b>Hasta el día</b></label>
-                    <input type="date" id="unt" name="unt" min="2020-01-01" max="2021-12-31" placeholder="yyyy-mm-dd" style="text-align:right;margin-left: 10px;">
-                </div>
-            </div>
-            <p> </p>
-            <div class="form-row">
-                <div class="col">
-                    <label style="margin-left: 10px;"><b>Publicaciones/acceso </b><i class="fa fa-question-circle" title="Número de tuits recuperados en cada invocación" style="font-size:24px;margin-top:5px;"></i></a></label>
-                    <input type="number" min="1" max="100" style="width:50px;margin-left:95px;" id="cont" name="cont" placeholder="15">
-                </div>
-            </div>
+        
             <p> </p>
             {% for message in get_flashed_messages(category_filter=["error"]) %}
                 <div class="alerta"><b>{{ message }}</b></div>
@@ -129,16 +144,15 @@
                 <div class="mensaje"><b>{{ message }}</b></div>
             {% endfor %}
             <p> </p>
-            <p style="font-size:40px; margin-left: 20px; margin-top: 20px;color:#4dacff;"><a href="#" class="pull-left"><img src="static/lambda.png" style="width:50px;height: 50px;"></a><b> Detalles de la función </b></p>
-            <div class="form-row">
-                <div class="col">
-                    <label style="margin-left: 10px;" title="Utilice exclusivamente letras, números, guiones o guiones bajos. No incluya espacios."><b>Nombre</b></a></label>
-                    <input type="text" style="margin-left: 10px;width: 260px;" id="fname" name="fname" maxlength ="64" required>
+            <p style="font-size:40px; margin-top: 20px;color:#4dacff;margin-left:10px;"><a href="#" class="pull-left"><img src="static/lambda.png" style="width:50px;height: 50px;"></a><b> Detalles de la función </b></p>
+            <div class="form-row" style="margin-left:10px;">
+                <div class="form-group col-md-4">
+                    <input type="text" class="form-control" title="Utilice exclusivamente letras, números, guiones o guiones bajos. No incluya espacios." id="fname" name="fname" maxlength ="64" placeholder="Nombre de la función" required>
                 </div>
-                <div class="col">
-                    <label style="margin-left: 50px;"><b>Frecuencia llamadas </b><i class="fa fa-question-circle" title="Invocaciones a la función Lambda por unidad de tiempo" style="font-size:24px;margin-top:5px;"></i></label>
-                    <input type="number" min="1" style="margin-left: 5px;width:50px;" id="frec" name="frec">
-                    <select id="frec_regla" name="frec_regla" style="height:30px;">
+                <div class="form-group col-md-4">
+                    <label><b>Frecuencia</b><i class="fa fa-question-circle" title="Invocaciones a la función Lambda por unidad de tiempo" style="font-size:24px;margin-top:5px;"></i></label>
+                    <input type="number" min="1" style="margin-left: 5px;width:50px" id="frec" name="frec">
+                    <select id="frec_regla" name="frec_regla" style="height:28px;">
                         <option value="" selected disabled hidden></option>
                         <option value="minutos">min</option>
                         <option value="horas">h</option>
@@ -146,15 +160,15 @@
                 </div>
             </div>
             <p> </p>
-            <div class="form-row">
-                <label style="margin-left: 20px;"><b>Descripción</b></label>
-                <textarea type="text" id="descr" name="descr" class="form-control" rows="3" style="margin-left: 20px" maxlength ="256"></textarea>
+            <div class="form-group col-6">
+                <textarea type="text" id="descr" name="descr" class="form-control" rows="4"  maxlength ="256" placeholder="Descripción de la función"></textarea>
             </div> 
-        </div>
-    </form>
-        <button type="submit" form="form1" class="btn btn-outline-dark btn-lg" style="margin-left: 10px;"><b>Consulta</b></button>
-    </form>
-    <p> </p>
+            <p> </p>
+        </form>
+            <button type="submit" form="form1" class="btn btn-outline-dark btn-lg" style="margin-left:20px;"><b>Consulta</b></button>
+        </form>
+    </div>
+</div>
     <p> </p>
 </body>
  

@@ -198,6 +198,7 @@ def index():
     else:
         return render_template('index.html')
 
+
         
 @app.route("/index_search", methods =["GET", "POST"])
 def index_search():
