@@ -99,6 +99,12 @@
             width: 100%; 
     }
 
+    .chart3{
+            margin-top: 30px;
+            text-align: center;
+            width: 100%; 
+    }
+
 </style>
 
 <body>
@@ -161,6 +167,10 @@
     <script type="text/javascript">
         var graphs = {{ graphJSON2|safe }};
         Plotly.plot('chart2', graphs, {});
+    </script>
+    <script type="text/javascript">
+        var graphs = {{ graphJSON3|safe }};
+        Plotly.plot('chart3', graphs, {});
     </script>
  
 </html>

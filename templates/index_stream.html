@@ -83,27 +83,26 @@
         <li><a href="{{ url_for('athena') }}">Athena</a></li>
     </ul>
 
-    <p style="font-size:20px; margin-top: 20px; margin-left: 20px; font-family: cursive;"><b>Indicar los parámetros de la consulta:</b></p>
     <p> </p>
-    <p style="font-size:40px; margin-left: 20px; margin-top: 20px;font-family: cursive;color:#4dacff;"><a href="#" class="pull-left"><img src="static/search.png" style="width:50px;height: 50px;"></a><b> PARÁMETROS DE LA CONSULTA</br></b></p>
+    <p style="font-size:40px; margin-left: 20px; margin-top: 20px;color:#4dacff;"><img src="static/search.png" style="width:50px;height: 50px;"><b> PARÁMETROS DE LA CONSULTA</br></b></p>
     <p> </p>
     <form id="form1" method="post" action="{{ url_for('index_stream')}}">
         <div class="form-group w-50">
             <div class="form-row">
                 <div class="col">
-                    <label style="margin-left: 20px;font-family: cursive;"><b>Búsqueda</b></label>
+                    <label style="margin-left: 20px;"><b>Búsqueda</b></label>
                     <input type="text" style="margin-left: 10px;width: 250px;" id="que" name="que" required>
                 </div>
                 <div class="col">
-                    <label style="margin-left: 50px;font-family: cursive;"><b>Idioma <a href="https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes">(ISO 639-1)</b></a></label>
-                    <select style="width:100px;margin-left:30px;" id="lengua" name="lengua">
-                        <option value="" selected disabled hidden style="font-family: cursive;"></option>
-                        <option value="en" style="font-family: cursive;">Inglés</option>
-                        <option value="es" style="font-family: cursive;">Español</option>
-                        <option value="pt" style="font-family: cursive;">Portugués</option>
-                        <option value="fr" style="font-family: cursive;">Francés</option>
-                        <option value="de" style="font-family: cursive;">Alemán</option>
-                        <option value="ru" style="font-family: cursive;">Ruso</option>
+                    <label style="margin-left: 50px;"><b>Idioma <a href="https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes">(ISO 639-1)</b></a></label>
+                    <select style="width:100px;margin-left:30px;height:36px;" id="lengua" name="lengua">
+                        <option value="" selected disabled hidden></option>
+                        <option value="en">Inglés</option>
+                        <option value="es">Español</option>
+                        <option value="pt">Portugués</option>
+                        <option value="fr">Francés</option>
+                        <option value="de">Alemán</option>
+                        <option value="ru">Ruso</option>
                     </select>
                 </div>
             </div>
@@ -115,30 +114,30 @@
                 <div class="mensaje"><b>{{ message }}</b></div>
             {% endfor %}
             <p> </p>
-            <p style="font-size:40px; margin-left: 20px; margin-top: 20px;font-family: cursive;color:#4dacff;"><a href="#" class="pull-left"><img src="static/lambda.png" style="width:50px;height: 50px;"></a><b> DETALLES DE LA FUNCIÓN</br></b></p>
+            <p style="font-size:40px; margin-left: 20px; margin-top: 20px; color:#4dacff;"><img src="static/lambda.png" style="width:50px;height: 50px;"><b> DETALLES DE LA FUNCIÓN</br></b></p>
             <div class="form-row">
                 <div class="col">
-                    <label style="margin-left: 20px;font-family: cursive;" title="Utilice exclusivamente letras, números, guiones o guiones bajos. No incluya espacios."><b>Nombre</b></a></label>
+                    <label style="margin-left: 20px;" title="Utilice exclusivamente letras, números, guiones o guiones bajos. No incluya espacios."><b>Nombre</b></a></label>
                     <input type="text" style="margin-left: 10px;width: 260px;" id="fname" name="fname"  maxlength ="64" required>
                 </div>
                 <div class="col">
-                    <label style="margin-left: 50px;font-family: cursive;"><b>Frecuencia llamadas </b><i class="fa fa-question-circle" title="Invocaciones a la función Lambda por unidad de tiempo" style="font-size:24px;margin-top:5px;"></i></label>
+                    <label style="margin-left: 50px;"><b>Frecuencia llamadas </b><i class="fa fa-question-circle" title="Invocaciones a la función Lambda por unidad de tiempo" style="font-size:24px;margin-top:5px;"></i></label>
                     <input type="number" min="1" style="margin-left: 5px;width:50px;" id="frec" name="frec">
-                    <select id="frec_regla" name="frec_regla" style="height:30px; font-family: cursive;">
+                    <select id="frec_regla" name="frec_regla" style="height:36px;">
                         <option value="" selected disabled hidden></option>
-                        <option value="minutos" style="font-family: cursive;">min</option>
-                        <option value="horas" style="font-family: cursive;">h</option>
+                        <option value="minutos">min</option>
+                        <option value="horas">h</option>
                     </select>
                 </div>
             </div>
             <p> </p>
             <div class="form-row">
-                <label style="margin-left: 20px;font-family: cursive;"><b>Descripción</b></label>
+                <label style="margin-left: 20px"><b>Descripción</b></label>
                 <textarea type="text" id="descr" name="descr" class="form-control" rows="3" style="margin-left: 20px" maxlength ="256"></textarea>
             </div> 
         </div>
     </form>
-        <button type="submit" form="form1" class="btn btn-outline-dark btn-lg" style="margin-left: 10px;font-family: cursive;"><b>Consulta</b></button>
+        <button type="submit" form="form1" class="btn btn-outline-dark btn-lg" style="margin-left: 10px;"><b>Consulta</b></button>
     </form>
     <p> </p>
     <p> </p>

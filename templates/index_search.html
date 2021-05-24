@@ -93,82 +93,83 @@
     </ul>
 
     <p> </p>
-    <div class="container center_div">
-        <p style="font-size:40px;color:#4dacff;margin-left:10px;"><a href="#" class="pull-left"><img src="static/search.png" style="width:50px;height: 50px;"></a><b> Parámetros de la consulta</br></b></p>
+
+    <p> </p>
+    <p style="font-size:40px;color:#4dacff;margin-left:10px;margin-left: 20px;"><img src="static/search.png" style="width:50px;height: 50px;"><b>PARÁMETROS DE LA CONSULTA</br></b></p>
+    <p> </p>
+    <form id="form1" method="post" action="{{ url_for('index_search')}}">
+        <div class="form-group col-6">
+            <input type="text" id="que" name="que" class="form-control" placeholder="Términos de la búsqueda" required>
+        </div>
         <p> </p>
-        <form id="form1" method="post" action="{{ url_for('index_search')}}">
-            <div class="form-group col-6">
-                <input type="text" id="que" name="que" class="form-control" placeholder="Términos de la búsqueda" required>
+        <div class="form-row" style="margin-left:10px;">
+            <div class="form-group col-md-2">
+                <label><b>Resultados</b></label>
+                <select id="res" name="res" style="height:36px;">
+                    <option value="" selected disabled hidden></option>
+                    <option value="mixed">Mixed</option>
+                    <option value="recent">Recent</option>
+                    <option value="popular">Popular</option>
+                </select>
             </div>
-            <p> </p>
-            <div class="form-row" style="margin-left:10px;">
-                <div class="form-group col-md-4">
-                    <label><b>Resultados</b></label>
-                    <select id="res" name="res" style="margin-left:50px;">
-                        <option value="" selected disabled hidden></option>
-                        <option value="mixed">Mixed</option>
-                        <option value="recent">Recent</option>
-                        <option value="popular">Popular</option>
-                    </select>
-                </div>
-                <div class="form-group col-md-4">
-                    <label><b>Tuits/acceso </b><i class="fa fa-question-circle" title="Número de tuits recuperados en cada invocación" style="font-size:24px;margin-top:5px;"></i></a></label>
-                    <input type="number" min="1" max="100" id="cont" name="cont" placeholder="15" style="margin-left:18px;">
-                </div>
+            <div class="form-group col-md-2">
+                <label><b><a href="https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes">Idioma (ISO)</b></a></label>
+                <select id="lengua" name="lengua" style="height:36px;">
+                    <option value="" selected disabled hidden></option>
+                    <option value="en">Inglés</option>
+                    <option value="es">Español</option>
+                    <option value="pt">Portugués</option>
+                    <option value="fr">Francés</option>
+                    <option value="de">Alemán</option>
+                    <option value="ru">Ruso</option>
+                </select>
             </div>
-            <p> </p>
-            <div class="form-row" style="margin-left:10px;">
-                <div class="form-group col-md-4">
-                    <label><b>Hasta</b></label>
-                    <input type="date" id="unt" name="unt" min="2020-01-01" max="2021-12-31" placeholder="yyyy-mm-dd" style="text-align:right;">
-                </div>
-                <div class="form-group col-md-4">
-                    <label><b><a href="https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes">Idioma (ISO)</b></a></label>
-                    <select id="lengua" name="lengua" style="margin-left:8px;">
-                        <option value="" selected disabled hidden></option>
-                        <option value="en">Inglés</option>
-                        <option value="es">Español</option>
-                        <option value="pt">Portugués</option>
-                        <option value="fr">Francés</option>
-                        <option value="de">Alemán</option>
-                        <option value="ru">Ruso</option>
-                    </select>
-                </div>
+            <div class="form-group col-md-2">
+                <label><b>Tuits/acceso </b><i class="fa fa-question-circle" title="Número de tuits recuperados en cada invocación" style="margin-top:5px;"></i></a></label>
+                <input type="number" min="1" max="100" id="cont" name="cont" placeholder="15" style="height:36px;">
             </div>
-        
-            <p> </p>
-            {% for message in get_flashed_messages(category_filter=["error"]) %}
-                <div class="alerta"><b>{{ message }}</b></div>
-            {% endfor %}
-            {% for message in get_flashed_messages(category_filter=["success"]) %}
-                <div class="mensaje"><b>{{ message }}</b></div>
-            {% endfor %}
-            <p> </p>
-            <p style="font-size:40px; margin-top: 20px;color:#4dacff;margin-left:10px;"><a href="#" class="pull-left"><img src="static/lambda.png" style="width:50px;height: 50px;"></a><b> Detalles de la función </b></p>
-            <div class="form-row" style="margin-left:10px;">
-                <div class="form-group col-md-4">
-                    <input type="text" class="form-control" title="Utilice exclusivamente letras, números, guiones o guiones bajos. No incluya espacios." id="fname" name="fname" maxlength ="64" placeholder="Nombre de la función" required>
-                </div>
-                <div class="form-group col-md-4">
-                    <label><b>Frecuencia</b><i class="fa fa-question-circle" title="Invocaciones a la función Lambda por unidad de tiempo" style="font-size:24px;margin-top:5px;"></i></label>
-                    <input type="number" min="1" style="margin-left: 5px;width:50px" id="frec" name="frec">
-                    <select id="frec_regla" name="frec_regla" style="height:28px;">
-                        <option value="" selected disabled hidden></option>
-                        <option value="minutos">min</option>
-                        <option value="horas">h</option>
-                    </select>
-                </div>
+        </div>
+        <p> </p>
+        <div class="form-row" style="margin-left:10px;">
+            <div class="form-group col-md-4">
+                <label><b>Hasta</b></label>
+                <input type="date" id="unt" name="unt" min="2020-01-01" max="2021-12-31" placeholder="yyyy-mm-dd" style="text-align:right;height:36px;">
             </div>
-            <p> </p>
-            <div class="form-group col-6">
-                <textarea type="text" id="descr" name="descr" class="form-control" rows="4"  maxlength ="256" placeholder="Descripción de la función"></textarea>
-            </div> 
-            <p> </p>
-        </form>
-            <button type="submit" form="form1" class="btn btn-outline-dark btn-lg" style="margin-left:20px;"><b>Consulta</b></button>
-        </form>
-    </div>
+        </div>
+    
+        <p> </p>
+        {% for message in get_flashed_messages(category_filter=["error"]) %}
+            <div class="alerta"><b>{{ message }}</b></div>
+        {% endfor %}
+        {% for message in get_flashed_messages(category_filter=["success"]) %}
+            <div class="mensaje"><b>{{ message }}</b></div>
+        {% endfor %}
+        <p> </p>
+        <p style="font-size:40px; margin-top: 20px;color:#4dacff;margin-left:10px;"><img src="static/lambda.png" style="width:50px;height: 50px;"><b> DETALLES DE LA FUNCIÓN </b></p>
+        <div class="form-row" style="margin-left:10px;">
+            <div class="form-group col-md-4">
+                <input type="text" class="form-control" title="Utilice exclusivamente letras, números, guiones o guiones bajos. No incluya espacios." id="fname" name="fname" maxlength ="64" placeholder="Nombre de la función" required>
+            </div>
+            <div class="form-group col-md-4">
+                <label><b>Frecuencia</b><i class="fa fa-question-circle" title="Invocaciones a la función Lambda por unidad de tiempo" style="font-size:24px;margin-top:5px;"></i></label>
+                <input type="number" min="1" style="margin-left: 5px;width:50px" id="frec" name="frec">
+                <select id="frec_regla" name="frec_regla" style="height:36px;">
+                    <option value="" selected disabled hidden></option>
+                    <option value="minutos">min</option>
+                    <option value="horas">h</option>
+                </select>
+            </div>
+        </div>
+        <p> </p>
+        <div class="form-group col-6">
+            <textarea type="text" id="descr" name="descr" class="form-control" rows="4"  maxlength ="256" placeholder="Descripción de la función"></textarea>
+        </div> 
+        <p> </p>
+    </form>
+        <button type="submit" form="form1" class="btn btn-outline-dark btn-lg" style="margin-left:20px;"><b>Consulta</b></button>
+    </form>
 </div>
+
     <p> </p>
 </body>
  

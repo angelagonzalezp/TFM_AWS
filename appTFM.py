@@ -507,24 +507,24 @@ def athena():
             graphJSON2 = scatter_chart(x,y,"Seguidos(x) vs. Seguidores(y) de los autores")
             return render_template('athena.html', tablas = metadatos, graphJSON=graphJSON, graphJSON2=graphJSON2)
         
-        # if 'created_at' in df.columns:
-        #     fechas = created_at_datetime(df['created_at'])  # Datetime
-        #     fechas = sorted(fechas)                         # Ordenadas 
-        #     fechas_unicas = set(fechas)                     # Fechas sin repetir
-        #     tuits_dia = []                                  # Frecuencia de cada fecha
-        #     for i in range(0,len(fechas_unicas)):
-        #         tuits_dia.append(fechas.count(fechas_unicas[i]))    # Ocurrencias
+        elif 'retweet_count' and 'favorite_count' and 'screen_name' in df.columns:
+            nRTs = df['retweet_count'].tolist()
+            nRTs = map(int, nRTs)
+            nFAVs = df['favorite_count'].tolist()
+            nFAVs = map(int, nFAVs) 
             
-        # graphJSON3 = bar_chart(fechas_unicas, tuits_dia, "Número de publicaciones por día")
+            scr_nm = df['screen_name'].tolist()
+            
+            rts_favs = []                             
+            for i in range(0,len(nRTs)):
+                rts_favs.append(nRTs[i]+nFAVs[i])
+            
+            # Gráfico de dispersión con seguidores y seguidos de los usuarios
+            graphJSON3 = bar_chart(scr_nm,rts_favs,"Suma de rts y favs de los tuits")
+            return render_template('athena.html', tablas = metadatos, graphJSON=graphJSON, graphJSON2=graphJSON2,graphJSON3=graphJSON3)
+            
         
         return render_template('athena.html', tablas = metadatos, graphJSON=graphJSON)
-    
-    # Funcionalidad del botón "ELIMINAR"
-    # if tablaDEL is not None:   
-    #     clientGlue.delete_table(CatalogId='AwsDataCatalog', DatabaseName='default', Name='string')
-    #     # Listar las tablas existentes:
-    #     tablas = clAth.list_table_metadata(CatalogName='AwsDataCatalog', DatabaseName='default')
-    #     metadatos = tablas['TableMetadataList']         # Metadatos de las tablas
         
     return render_template('athena.html', tablas = metadatos)
 
