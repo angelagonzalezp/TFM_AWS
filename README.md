@@ -13,15 +13,17 @@ This tool allows to collect:
 
 It consists on a modular architecture that combines the following AWS cloud services:
 - AWS Lambda
+- Amazon CloudWatch Events
 - Amazon Kinesis Data Firehose
 - Amazon S3
 - Amazon Athena 
+- AWS Glue
 
 This web app prototype is designed to allow the user to:
 - Create huge datasets of tweets (including metadata) matching specific criteria.
 - Keep them always accesible in an S3 bucket.
 - Analise them by SQL queries, creating custom-made Athena tables. Once you have a table, two options are available:
   - Export as CSV file.
-  - Export to a data-mining tool to create helpful visualisation in orden to find hidden patterns.
+  - Export to a data-mining tool to create helpful visualisation in orden to find hidden patterns (Tableau, Amazon Quicksight,...).
 
 
