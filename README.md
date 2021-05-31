@@ -27,3 +27,5 @@ This web app prototype is designed to allow the user to:
   - Export to a data-mining tool to create helpful visualisation in orden to find hidden patterns (Tableau, Amazon Quicksight,...).
 
 
+![diseño](https://user-images.githubusercontent.com/71433272/120185269-44899800-c212-11eb-91f9-e14dac6b49ed.png)
+![diseño2](https://user-images.githubusercontent.com/71433272/120185292-4bb0a600-c212-11eb-9afc-273ad36a11d7.png)
