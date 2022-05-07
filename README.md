@@ -1,5 +1,5 @@
 # Master's Degree Final Project
-## AWS based tool to analise the spreading of misinformation on Twitter
+## AWS based tool to analyse the spreading of misinformation on Twitter
 ###### Ángela González Ponce - Telecommunications Engineer
 
 Análisis de tendencias de desinformación, Máster en Ingeniería de Telecomunicaciones. 
